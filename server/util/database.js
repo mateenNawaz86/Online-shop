@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-// Mongodb URI
+// MONGODB URI
 const mongoURI = process.env.MONGO_URI;
 
 // function for connecting to MongoDB
@@ -12,7 +12,9 @@ const connectedToMongo = () => {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     })
-    .then("Connected to MongoDB successfully!")
+    .then((result) => {
+      console.log("Connected to MongoDB successfully!");
+    })
     .catch((err) => {
       console.log(err);
     });
