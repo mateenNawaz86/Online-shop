@@ -9,4 +9,13 @@ router.get("/add-product", adminController.getAddProduct);
 // 2. POST Route for the add-product
 router.post("/add-product", adminController.postAddProduct);
 
+// 3. GET Route for getting all the product list
+router.get("/products", adminController.getProducts);
+
+// 3. GET Route for edit the existing product with id
+router.get("/edit-product/:productId", adminController.getEditProduct);
+
+// 4. POST Route for positng the edit-product
+router.post("/edit-product", adminController.postEditProduct);
+
 module.exports = router;
