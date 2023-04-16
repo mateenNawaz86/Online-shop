@@ -14,7 +14,7 @@ exports.postAddProduct = async (req, res, next) => {
   const { title, imgURL, description, price } = req.body;
   try {
     // create a new product object using the request body
-    const product = new Product({
+    const newProduct = new Product({
       title: title,
       imgURL: imgURL,
       description: description,
@@ -22,10 +22,12 @@ exports.postAddProduct = async (req, res, next) => {
     });
 
     // save the product to the database
-    const savedProduct = await product.save();
-
+    const savedProduct = await newProduct.save();
+    if (savedProduct) {
+      res.redirect("/");
+    }
     // send the saved product as a response
-    res.json(savedProduct);
+    // res.json(savedProduct);
   } catch (err) {
     // handle any errors that occur during the save operation
     res.status(500).json({ message: err.message });
@@ -37,7 +39,7 @@ exports.getProducts = async (req, res) => {
   Product.find().then((product) => {
     res.render("admin/products", {
       pageTitle: "Admin Products",
-      path: "/api/products",
+      path: "/api/admin/products",
       prods: product,
     });
   });
@@ -86,7 +88,19 @@ exports.postEditProduct = async (req, res) => {
     })
     .then((result) => {
       console.log("Product UPDATED Successfully");
-      res.redirect("/api/products");
+      res.redirect("/products");
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+// 6. Controller for Deleting an existing
+exports.postDeleteProd = async (req, res) => {
+  const prodId = req.body.productId;
+  Product.findByIdAndRemove(prodId)
+    .then((result) => {
+      res.redirect("/api/admin/products");
     })
     .catch((err) => {
       console.log(err);

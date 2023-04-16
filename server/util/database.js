@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const User = require("../models/User");
+
 dotenv.config();
 
 // MONGODB URI
@@ -13,6 +15,16 @@ const connectedToMongo = () => {
       useUnifiedTopology: true,
     })
     .then((result) => {
+      User.findOne().then((user) => {
+        if (!user) {
+          const user = new User({
+            name: "Mateen Nawaz",
+            email: "mateen@test.com",
+            items: [],
+          });
+          user.save();
+        }
+      });
       console.log("Connected to MongoDB successfully!");
     })
     .catch((err) => {
