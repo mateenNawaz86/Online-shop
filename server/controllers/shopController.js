@@ -1,7 +1,7 @@
-const Product = require("../models/ProductModel");
+const Product = require("../models/Product");
 
 // 1. Controller for the landing page
-exports.getIndex = (req, res, next) => {
+exports.getIndex = (req, res) => {
   Product.find().then((products) => {
     res.render("shop/index", {
       prods: products,

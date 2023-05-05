@@ -1,4 +1,4 @@
-const Product = require("../models/ProductModel");
+const Product = require("../models/Product");
 
 // 1. Controller for getting add product page
 exports.getAddProduct = (req, res, next) => {
@@ -10,7 +10,7 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 // 2. Controller for psoting a new product to the database
-exports.postAddProduct = async (req, res, next) => {
+exports.postAddProduct = async (req, res) => {
   const { title, imgURL, description, price } = req.body;
   try {
     // create a new product object using the request body
@@ -19,6 +19,7 @@ exports.postAddProduct = async (req, res, next) => {
       imgURL: imgURL,
       description: description,
       price: price,
+      // userId: req.user,
     });
 
     // save the product to the database
@@ -26,8 +27,6 @@ exports.postAddProduct = async (req, res, next) => {
     if (savedProduct) {
       res.redirect("/");
     }
-    // send the saved product as a response
-    // res.json(savedProduct);
   } catch (err) {
     // handle any errors that occur during the save operation
     res.status(500).json({ message: err.message });
