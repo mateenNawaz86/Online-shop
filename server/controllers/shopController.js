@@ -62,10 +62,14 @@ exports.getCart = (req, res) => {
 // This logic is for POST cart
 exports.postCart = (req, res) => {
   const prodId = req.body.productId;
-  Product.findProdById(prodId, (product) => {
-    Cart.addProduct(prodId, product.price);
-  });
-  res.redirect("/cart");
+  Product.findById(prodId)
+    .then((product) => {
+      return req.user.addToCart(product);
+    })
+    .then((result) => {
+      console.log(result);
+      res.redirect("/cart");
+    });
 };
 
 // This logic is used for delete the item from the cart

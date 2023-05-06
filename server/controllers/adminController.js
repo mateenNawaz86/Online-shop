@@ -19,7 +19,7 @@ exports.postAddProduct = async (req, res) => {
       imgURL: imgURL,
       description: description,
       price: price,
-      // userId: req.user,
+      userId: req.user,
     });
 
     // save the product to the database
@@ -35,25 +35,34 @@ exports.postAddProduct = async (req, res) => {
 
 // 3. Controller for getting all the products
 exports.getProducts = async (req, res) => {
-  Product.find().then((product) => {
-    res.render("admin/products", {
-      pageTitle: "Admin Products",
-      path: "/api/admin/products",
-      prods: product,
+  Product.find()
+    // .select("title price -_id") // it return a title & price of product except userId
+    // .populate("userId", "name") // it return a userId & name of the user Obj
+    .then((product) => {
+      res.render("admin/products", {
+        pageTitle: "Admin Products",
+        path: "/api/admin/products",
+        prods: product,
+      });
     });
-  });
 };
 
 // 4. Controller for get-Edit page
 exports.getEditProduct = async (req, res) => {
+  // Getting the query keyword from requested URL
   const editMode = req.query.edit;
+
+  // IF keyword NOT exist then go back to home page
   if (!editMode) {
     return res.redirect("/");
   }
 
   // Getting product ID from the request body
   const prodId = req.params.productId;
+
+  // fetch the particular product with specific id
   Product.findById(prodId).then((product) => {
+    // IF product NOT exist with requested ID then go back to '/'
     if (!product) {
       return res.redirect("/");
     }
@@ -77,6 +86,7 @@ exports.postEditProduct = async (req, res) => {
   const updatedDescription = req.body.description;
   const updatedPrice = req.body.price;
 
+  // change the selected product and save it
   Product.findById(prodId)
     .then((product) => {
       product.title = updatedTitle;
@@ -85,6 +95,7 @@ exports.postEditProduct = async (req, res) => {
       product.price = updatedPrice;
       return product.save();
     })
+    // click the Update btn and go back to '/products'
     .then((result) => {
       console.log("Product UPDATED Successfully");
       res.redirect("/products");
@@ -97,6 +108,8 @@ exports.postEditProduct = async (req, res) => {
 // 6. Controller for Deleting an existing
 exports.postDeleteProd = async (req, res) => {
   const prodId = req.body.productId;
+
+  // Remove the product from array with the selected ID
   Product.findByIdAndRemove(prodId)
     .then((result) => {
       res.redirect("/api/admin/products");
