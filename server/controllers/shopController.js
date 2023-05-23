@@ -1,25 +1,31 @@
 const Product = require("../models/Product");
 
 // 1. Controller for the landing page
-exports.getIndex = (req, res) => {
-  Product.find().then((products) => {
-    res.render("shop/index", {
-      prods: products,
-      pageTitle: "Shop",
-      path: "/",
-    });
-  });
+exports.getIndex = async (req, res) => {
+  try {
+    // getting all products
+    const products = await Product.find();
+
+    // Return the profile data
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
 
 // 2. Constroller for the getting all product list
 exports.getProducts = async (req, res) => {
-  Product.find().then((products) => {
-    res.render("shop/product-list", {
-      prods: products,
-      pageTitle: "All Products",
-      path: "/products",
-    });
-  });
+  try {
+    // getting all products
+    const products = await Product.find();
+
+    // Return the profile data
+    res.status(200).json(products);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server Error" });
+  }
 };
 
 // 3. Controller for getting a single route

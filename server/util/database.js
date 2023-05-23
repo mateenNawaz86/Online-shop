@@ -16,16 +16,16 @@ const connectedToMongo = () => {
       useUnifiedTopology: true,
     })
     .then((result) => {
-      User.findOne().then((user) => {
-        if (!user) {
-          const user = new User({
-            name: "Mateen Nawaz",
-            email: "mateen@test.com",
-            items: [],
-          });
-          user.save();
-        }
-      });
+      // User.findOne().then((user) => {
+      //   if (!user) {
+      //     const user = new User({
+      //       name: "Mateen Nawaz",
+      //       email: "mateen@test.com",
+      //       items: [],
+      //     });
+      //     user.save();
+      //   }
+      // });
       console.log("Connected to MongoDB successfully!");
     })
     .catch((err) => {
