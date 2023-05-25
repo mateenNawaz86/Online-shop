@@ -14,30 +14,24 @@ exports.getIndex = async (req, res) => {
   }
 };
 
-// 2. Constroller for the getting all product list
-exports.getProducts = async (req, res) => {
-  try {
-    // getting all products
-    const products = await Product.find();
-
-    // Return the profile data
-    res.status(200).json(products);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
-  }
-};
-
 // 3. Controller for getting a single route
-exports.getProduct = async (req, res) => {
-  const prodId = req.params.productId;
-  Product.findById(prodId).then((product) => {
-    res.render("shop/product-detail", {
-      product: product,
-      pageTitle: product.title,
-      path: "/product",
-    });
-  });
+exports.getProductDetail = async (req, res) => {
+  const prodId = req.params.id;
+  try {
+    // Use the findById method to retrieve the profile by its ID
+    const product = await Product.findById(prodId);
+
+    // IF profile NOT exist with this specific ID
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Return the profile detail as a JSON response
+    res.json(product);
+  } catch (error) {
+    console.error("Error retrieving product:", error);
+    res.status(500).json({ error: "Server error" });
+  }
 };
 
 // This logic is for GET cart route

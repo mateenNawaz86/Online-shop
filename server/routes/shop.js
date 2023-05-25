@@ -6,11 +6,8 @@ const shopController = require("../controllers/shopController");
 // 1. Route for the landing page
 router.get("/", shopController.getIndex);
 
-// // 2. Route for the Products
-// router.get("/products", shopController.getProducts);
-
-// // 3. Route for getting a single product detail
-// router.get("/product/:productId", shopController.getProduct);
+// 3. Route for getting a single product detail
+router.get("/product-detail/:id", shopController.getProductDetail);
 
 // // GET Route for move product to the Cart
 // router.get("/cart", shopController.getCart);

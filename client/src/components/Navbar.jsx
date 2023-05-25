@@ -72,16 +72,6 @@ const Navbar = () => {
           >
             <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
               <Link
-                to="/products"
-                className={`${
-                  location.pathname === "/products" ? "text-[#E74133]" : ""
-                }`}
-              >
-                Products
-              </Link>
-            </li>
-            <li className="cursor-pointer hover:text-[#ec5446] py-3 px-6 lg:py-0 lg:px-0 lg:ml-6 border-b-2 border-[#e7e7e7] lg:border-b-0">
-              <Link
                 to="/cart"
                 className={`${
                   location.pathname === "/cart" ? "text-[#E74133]" : ""

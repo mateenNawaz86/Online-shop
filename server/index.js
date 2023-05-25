@@ -1,30 +1,30 @@
 const express = require("express");
 const cors = require("cors");
-
 const dotenv = require("dotenv");
 dotenv.config();
 
-const bodyParser = require("body-parser");
+// function for connecting to database
 const connectedToMongo = require("./util/database");
+connectedToMongo();
 
-const port = process.env.PORT || 7000;
 const app = express();
-app.use(cors());
+const port = process.env.PORT || 8000;
 
-// Routes imports
+// Routes import
 const shopRoute = require("./routes/shop");
 const adminRoute = require("./routes/admin");
 
-// function calling for connect to MONGODB
-connectedToMongo();
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
-// Middleware used for parsing a request body
-app.use(bodyParser.urlencoded({ extended: false }));
+// cors function used to provide the data from server to different domain easily
+app.use(cors());
 
 // Routes
 app.use("/api", adminRoute);
 app.use(shopRoute);
 
+// APP listening
 app.listen(port, () => {
-  console.log(`App is listening on the port ${port}`);
+  console.log(`Online-shop application listening on ${port}`);
 });
