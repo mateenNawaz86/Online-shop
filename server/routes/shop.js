@@ -9,11 +9,11 @@ router.get("/", shopController.getIndex);
 // 3. Route for getting a single product detail
 router.get("/product-detail/:id", shopController.getProductDetail);
 
-// // GET Route for move product to the Cart
-// router.get("/cart", shopController.getCart);
+// GET Route for move product to the Cart
+router.get("/cart", shopController.getCartItems);
 
-// // // POST ROute for add product to the CART
-// router.post("/cart", shopController.postCart);
+// POST ROute for add product to the CART
+router.post("/cart", shopController.postCart);
 
 // // Route for orders page
 // router.get("/orders", shopController.getOrders);

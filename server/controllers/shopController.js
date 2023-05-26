@@ -35,58 +35,63 @@ exports.getProductDetail = async (req, res) => {
 };
 
 // This logic is for GET cart route
-exports.getCart = (req, res) => {
-  Cart.find((cart) => {
-    Product.find((products) => {
-      const cartProducts = [];
-      // Filtered out the product which are exactly in the cart
-      for (prodItem of products) {
-        // Check cart product ID is matched with product in the list
-        const cartProdData = cart.products.find(
-          (item) => item.id === prodItem.id
-        );
-        if (cartProdData) {
-          // IF product in the cart push into the cart page
-          cartProducts.push({ productData: prodItem, qty: cartProdData.qty });
-        }
-      }
-      res.render("shop/cart", {
-        path: "/cart",
-        pageTitle: "Your Cart",
-        products: cartProducts,
-      });
-    });
-  });
+// controller for fetching cart items
+exports.getCartItems = async (req, res) => {
+  try {
+    res.json(cartItems);
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
-// This logic is for POST cart
-exports.postCart = (req, res) => {
-  const prodId = req.body.productId;
-  Product.findById(prodId)
-    .then((product) => {
-      return req.user.addToCart(product);
-    })
-    .then((result) => {
-      console.log(result);
-      res.redirect("/cart");
-    });
+// controller for adding product to the cart
+exports.postCart = async (req, res) => {
+  const { id, quantity } = req.body;
+
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      return res.status(404).json({ error: "Product not found" });
+    }
+
+    // Check if the product already exists in the cartItems array
+    const existingCartItem = cartItems.find(
+      (item) => item.product._id.toString() === id
+    );
+
+    if (existingCartItem) {
+      // If the product exists, update its quantity
+      existingCartItem.quantity += quantity;
+    } else {
+      // If the product doesn't exist, add it to the cartItems array
+      cartItems.push({ product, quantity });
+    }
+
+    res.json({ message: "Product added to cart successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
 // This logic is used for delete the item from the cart
-exports.postCartProdDelete = (req, res) => {
-  const prodId = req.body.productId;
-  Product.findById(prodId, (product) => {
-    Cart.deleteProd(prodId, product.price);
-    res.redirect("/cart");
-  });
-};
+exports.deleteCartItem = async (req, res) => {
+  const { itemId } = req.params;
 
-// This logic for cart page
-exports.getOrders = (req, res) => {
-  res.render("shop/orders", {
-    path: "/orders",
-    pageTitle: "Your Orders",
-  });
+  try {
+    // Find the index of the cart item in the cartItems array using its ID
+    const index = cartItems.findIndex((item) => item.product._id === itemId);
+
+    if (index === -1) {
+      return res.status(404).json({ error: "Cart item not found" });
+    }
+
+    // Remove the cart item from the cartItems array
+    cartItems.splice(index, 1);
+
+    res.json({ message: "Cart item deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
 // This logic for checkout page

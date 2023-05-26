@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Spinner from "../../UI/Spinner";
+import { addToCart } from "../../state/cartSlice";
+import { useDispatch } from "react-redux";
 
 const Products = () => {
   const [data, setData] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     fetchData();
@@ -25,6 +28,12 @@ const Products = () => {
   const navigate = useNavigate();
   const productHandler = (id) => {
     navigate(`/product-detail/${id}`);
+  };
+
+  const addToCartHandler = (product) => {
+    dispatch(addToCart(product));
+    console.log("Product added to cart:", product);
+    navigate("/cart");
   };
 
   return (
@@ -72,12 +81,12 @@ const Products = () => {
                         >
                           Detail
                         </button>
-                        <Link
-                          to="/add-to-cart"
+                        <button
+                          onClick={() => addToCartHandler(item.product_id)}
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
                           Add to cart
-                        </Link>
+                        </button>
                       </div>
                     </div>
                   </div>

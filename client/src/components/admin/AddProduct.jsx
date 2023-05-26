@@ -57,15 +57,15 @@ const AddProduct = () => {
 
   return (
     <>
-      <main className="w-full">
-        <section className="py-8 w-4/5 mx-auto">
-          <h2 className="text-center text-[#4280EA] text-3xl font-semibold mb-4 tracking-wider">
+      <main className="py-4 md:py-8">
+        <section className="w-4/5 m-auto">
+          <h2 className="text-center text-[#4280EA] text-3xl font-semibold mb-8 tracking-wider">
             Add Product
           </h2>
 
           <form
             onSubmit={formSubmitHandler}
-            className="flex flex-col gap-2 w- bg-[#f6f6f6] px-6 py-4 rounded shadow-md"
+            className="flex flex-col gap-2 w-full lg:w-1/2 mx-auto  bg-[#f6f6f6] px-6 py-4 rounded shadow-md"
           >
             <div className="flex flex-col">
               <label
