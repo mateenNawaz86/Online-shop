@@ -14,6 +14,7 @@ const port = process.env.PORT || 8000;
 const shopRoute = require("./routes/shop");
 const adminRoute = require("./routes/admin");
 
+// Middleware for handling the request between client and server
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 

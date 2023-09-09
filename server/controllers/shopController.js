@@ -34,11 +34,11 @@ exports.getProductDetail = async (req, res) => {
   }
 };
 
-// This logic is for GET cart route
+
 // controller for fetching cart items
 exports.getCartItems = async (req, res) => {
   try {
-    res.json(cartItems);
+    res.status(200).json({ cartItems });
   } catch (error) {
     res.status(500).json({ error: "Internal Server Error" });
   }

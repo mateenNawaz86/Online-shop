@@ -12,7 +12,7 @@ router.get("/product-detail/:id", shopController.getProductDetail);
 // GET Route for move product to the Cart
 router.get("/cart", shopController.getCartItems);
 
-// POST ROute for add product to the CART
+// POST Route for add product to the CART
 router.post("/cart", shopController.postCart);
 
 // // Route for orders page
