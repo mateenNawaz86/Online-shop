@@ -37,7 +37,7 @@ const Products = () => {
   };
 
   return (
-    <>
+    <div>
       <main className="py-8 w-11/12  m-auto">
         <section className="max-w-eighty m-auto mb-12">
           <h1 className="text-base uppercase sm:text-xl md:text-3xl text-orange-500 font-medium text-center mb-4">
@@ -47,7 +47,7 @@ const Products = () => {
           <hr className="mb-5" />
 
           {data.length === 0 ? (
-            <div className="flex justify-center items-center h-screen">
+            <div className="flex justify-center items-center">
               <Spinner />
             </div>
           ) : (
@@ -83,13 +83,13 @@ const Products = () => {
                           onClick={() => productHandler(item._id)}
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
-                          Detail
+                          Edit
                         </button>
                         <button
                           onClick={() => addToCartHandler(item.product_id)}
                           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                         >
-                          Add to cart
+                          Delete
                         </button>
                       </div>
                     </div>
@@ -100,7 +100,7 @@ const Products = () => {
           )}
         </section>
       </main>
-    </>
+    </div>
   );
 };
 

@@ -5,6 +5,7 @@ import AddProduct from "./components/admin/AddProduct";
 import Products from "./components/shop/Products";
 import ProductDetail from "./components/shop/ProductDetail";
 import Cart from "./components/shop/Cart";
+import AdminProducts from "./components/admin/Products";
 
 const App = () => {
   return (
@@ -15,6 +16,7 @@ const App = () => {
         <Route path="/add-product" element={<AddProduct />} exact />
         <Route path="/product-detail/:id" element={<ProductDetail />} exact />
         <Route path="/cart" element={<Cart />} exact />
+        <Route path="/admin-product" element={<AdminProducts />} exact />
       </Routes>
     </>
   );

@@ -1,4 +1,4 @@
-const Product = require('../models/Product');
+const Product = require("../models/Product");
 
 exports.postAddProduct = async (req, res) => {
   const { title, imgURL, description, price } = req.body;
@@ -6,7 +6,7 @@ exports.postAddProduct = async (req, res) => {
   try {
     // Validate required fields
     if (!title || !imgURL || !description || !price) {
-      return res.status(400).json({ message: 'All fields are required.' });
+      return res.status(400).json({ message: "All fields are required." });
     }
 
     // Create a new product object
@@ -24,17 +24,25 @@ exports.postAddProduct = async (req, res) => {
     res.status(201).json(savedProduct);
   } catch (err) {
     // Handle specific validation errors
-    if (err.name === 'ValidationError') {
+    if (err.name === "ValidationError") {
       const errors = Object.values(err.errors).map((error) => error.message);
       return res.status(400).json({ message: errors });
     }
 
     // Handle other errors
     console.error(err);
-    res.status(500).json({ message: 'Internal server error.' });
+    res.status(500).json({ message: "Internal server error." });
   }
 };
 
+exports.getProducts = async (req, res) => {
+  try {
+    const products = await Product.find();
+    return products;
+  } catch (error) {
+    res.status(304).json({ message: "No product found!" });
+  }
+};
 
 // // 4. Controller for get-Edit page
 // exports.getEditProduct = async (req, res) => {

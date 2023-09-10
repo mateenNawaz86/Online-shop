@@ -10,7 +10,7 @@ const adminController = require("../controllers/adminController");
 router.post("/add-product", adminController.postAddProduct);
 
 // 3. GET Route for getting all admin products list
-// router.get("/admin/products", adminController.getProducts);
+router.get("/admin/products", adminController.getProducts);
 
 // // 3. GET Route for edit the existing product with id
 // router.get("/edit-product/:productId", adminController.getEditProduct);
